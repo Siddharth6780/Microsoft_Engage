@@ -41,4 +41,4 @@ function SendAnswer(data) {
     this.broadcast.emit("BackAnswer", data)
 }
 
-http.listen(port, () => console.log(`Active on ${port} port`))
+http.listen(process.env.PORT || 3000)
