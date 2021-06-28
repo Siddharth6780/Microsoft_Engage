@@ -8284,19 +8284,22 @@ navigator.mediaDevices.getUserMedia({ video: true, audio: true })
             }
             let peer = new Peer({ initiator: initiator_type, stream: stream, trickle: false })
             peer.on('stream', (stream) => {
+                let req = document.querySelector('#peerDiv');
                 let video = document.createElement('video');
                 video.id = 'peerVideo';
                 video.srcObject = stream;
                 video.classList.add("embed-responsive-item");
-                let req = document.querySelector('#peerDiv');
                 req.appendChild(video);
                 video.play();
             });
-            peer.on('close', () => {
-                document.qetElementbyId("peerVideo").remove();
-                peer.destroy();
-            });
             return peer;
+        }
+
+        function ExitVideo() {
+            document.getElementById("peerVideo").remove();
+            if (client.peer) {
+                client.peer.destroy()
+            }
         }
 
         function MakePeer() {
@@ -8331,6 +8334,7 @@ navigator.mediaDevices.getUserMedia({ video: true, audio: true })
             document.write('Session Active. Please come back later')
         });
         socket.on('CreatePeer', MakePeer);
+        socket.on('ExitVideo', ExitVideo);
     })
     .catch(err => document.write("Please Give Permission of Microphone and Camera"))
 
@@ -8339,7 +8343,6 @@ muteButton.addEventListener("click", () => {
     if (enabled) {
         myVideoStream.getAudioTracks()[0].enabled = false;
         html = `<i class="fas fa-microphone-slash after_effect"></i>`;
-        //muteButton.style.color = 'red';
         muteButton.innerHTML = html;
     } else {
         myVideoStream.getAudioTracks()[0].enabled = true;
@@ -8355,7 +8358,6 @@ stopVideo.addEventListener("click", () => {
         myVideoStream.getVideoTracks()[0].enabled = false;
         html = `<i class="fas fa-video-slash after_effect"></i>`;
         stopVideo.innerHTML = html;
-        //stopVideo.style.color = 'red';
     } else {
         myVideoStream.getVideoTracks()[0].enabled = true;
         html = `<i class="fas fa-video"></i>`;
@@ -8370,4 +8372,10 @@ inviteButton.addEventListener("click", () => {
     prompt('Copy this Link to share with others', window.location.href);
 });
 
+const ExitButton = document.querySelector("#ExitButton");
+
+ExitButton.addEventListener("click", () => {
+    window.open('', '_self').close();
+    window.location = "leave.html";
+});
 },{"simple-peer":28}]},{},[35]);

@@ -7,17 +7,15 @@ const port = process.env.PORT || 3000
 app.use(express.static(__dirname + "/public"))
 let clients = 0
 
-io.on('connection', function (socket) {
-    socket.on("NewClient", function () {
+io.on('connection', function(socket) {
+    socket.on("NewClient", function() {
         if (clients < 2) {
             if (clients == 1) {
                 this.emit('CreatePeer')
             }
-        }
-        else
+        } else
             this.emit('SessionActive')
         clients++;
-        // this.emit('CreatePeer');
     })
     socket.on('Offer', SendOffer)
     socket.on('Answer', SendAnswer)
@@ -26,11 +24,9 @@ io.on('connection', function (socket) {
 
 function Disconnect() {
     if (clients > 0) {
-        if (clients <= 2)
-            
         clients--
+        this.broadcast.emit("ExitVideo");
     }
-   // this.broadcast.emit("Disconnect")
 }
 
 function SendOffer(offer) {
