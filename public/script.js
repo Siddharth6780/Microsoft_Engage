@@ -1,7 +1,12 @@
 const socket = io('/')
 const videoGrid = document.getElementById('video-grid')
 let myVideoStream;
-let peer = new Peer({ host: 'peerjs-server.herokuapp.com', secure: true, port: 443 })
+var mypeer = new Peer()
+const myPeer = new Peer(undefined, {
+    path: '/peerjs',
+    host: '/',
+    port: '5000',
+})
 const myVideo = document.createElement('video')
 myVideo.muted = true
 const peers = {}
