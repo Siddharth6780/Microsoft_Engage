@@ -1,40 +1,70 @@
 const express = require('express')
 const app = express()
-const http = require('http').Server(app)
-const io = require('socket.io')(http)
-const port = process.env.PORT || 3000
+const server = require('http').Server(app)
+const io = require('socket.io')(server)
+const { v4: uuidV4 } = require('uuid');
 
-app.use(express.static(__dirname + "/public"))
-let clients = 0
+function makeid(length) {
+    var result = '';
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for (var i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() *
+            charactersLength));
+    }
+    return result;
+}
 
-io.on('connection', function(socket) {
-    socket.on("NewClient", function() {
-        if (clients < 2) {
-            if (clients == 1) {
-                this.emit('CreatePeer')
-            }
-        } else
-            this.emit('SessionActive')
-        clients++;
+
+function getRoomName() {
+    return makeid(10);
+}
+
+const bodyParser = require('body-parser')
+app.use(
+    bodyParser.urlencoded({
+        extended: true,
     })
-    socket.on('Offer', SendOffer)
-    socket.on('Answer', SendAnswer)
-    socket.on('disconnect', Disconnect)
+)
+app.set('view engine', 'ejs')
+app.use(express.static('public'))
+
+app.get('/', function(req, res) {
+    res.render('landing_page');
+});
+
+app.post('/redirect_create', (req, res) => {
+    res.render('create_room')
 })
 
-function Disconnect() {
-    if (clients > 0) {
-        clients--
-        this.broadcast.emit("ExitVideo");
-    }
-}
+app.post('/redirect_join', (req, res) => {
+    res.render('join_room')
+})
 
-function SendOffer(offer) {
-    this.broadcast.emit("BackOffer", offer)
-}
+app.post('/create', (req, res) => {
+    var room_name = getRoomName();
+    res.redirect(`/${room_name}`)
+})
 
-function SendAnswer(data) {
-    this.broadcast.emit("BackAnswer", data)
-}
+app.post('/join', (req, res) => {
+    var room_name = req.body.roomName;
+    res.redirect(`/${room_name}`)
+})
 
-http.listen(process.env.PORT || 3000)
+app.get('/:room', (req, res) => {
+    res.render('room', {
+        roomID: req.params.room,
+    })
+})
+
+io.on('connection', socket => {
+    socket.on('join-room', (roomId, userId) => {
+        socket.join(roomId);
+        socket.to(roomId).broadcast.emit('user-connected', userId);
+        socket.on('disconnect', () => {
+            socket.to(roomId).broadcast.emit('user-disconnected', userId)
+        })
+    })
+})
+
+server.listen(process.env.PORT || 3000);
