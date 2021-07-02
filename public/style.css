@@ -10,6 +10,12 @@ body {
     font-family: 'Josefin Sans', sans-serif;
 }
 
+::placeholder {
+    position: absolute;
+    left: 15px;
+    top: 10px;
+}
+
 .container-fluid {
     margin-top: 50px;
 }
