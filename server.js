@@ -2,6 +2,13 @@ const express = require('express')
 const app = express()
 const server = require('http').Server(app)
 const io = require('socket.io')(server)
+const { ExpressPeerServer } = require('peer');
+const peerServer = ExpressPeerServer(server, {
+    debug: true
+});
+app.use('/peerjs', peerServer);
+app.set('view engine', 'ejs')
+app.use(express.static('public'))
 
 function makeid(length) {
     var result = '';
@@ -14,23 +21,20 @@ function makeid(length) {
     return result;
 }
 
-
-function getRoomName() {
-    return makeid(10);
-}
-
 const bodyParser = require('body-parser')
 app.use(
     bodyParser.urlencoded({
         extended: true,
     })
 )
-app.set('view engine', 'ejs')
-app.use(express.static('public'))
 
 app.get('/', function(req, res) {
     res.render('landing_page');
 });
+
+function getRoomName() {
+    return makeid(10);
+}
 
 app.post('/redirect_create', (req, res) => {
     res.render('create_room')
