@@ -3,13 +3,33 @@ body {
     background-image: linear-gradient(to right, #e9e9e9, #ebebeb, #e9e9e9);
 }
 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Josefin Sans', sans-serif;
+}
+
 .container-fluid {
     margin-top: 50px;
+}
+
+.sr-only {
+    box-shadow: 10px 10px 5px rgb(209, 209, 209);
+    height: 40px;
+    border-radius: 2px;
 }
 
 .image_tag {
     height: 100%;
     width: 100%;
+    border: 2px solid #fff;
+    -moz-box-shadow: 10px 10px 5px rgb(154, 153, 153);
+    -webkit-box-shadow: 10px 10px 5px rgb(142, 141, 141);
+    box-shadow: 10px 10px 5px rgb(166, 163, 163);
+    -moz-border-radius: 25px;
+    -webkit-border-radius: 25px;
+    border-radius: 25px;
 }
 
 .all_input {
@@ -20,10 +40,6 @@ body {
     display: grid;
     grid-template-columns: repeat(auto-fill, 300px);
     grid-auto-rows: 300px;
-}
-
-.sr-only {
-    border-radius: 10px;
 }
 
 video {

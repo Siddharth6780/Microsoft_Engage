@@ -1,12 +1,11 @@
 const socket = io('/')
 const videoGrid = document.getElementById('video-grid')
-let myVideoStream;
-var mypeer = new Peer()
 const myPeer = new Peer(undefined, {
     path: '/peerjs',
     host: '/',
-    port: '443',
+    port: '443'
 })
+let myVideoStream;
 const myVideo = document.createElement('video')
 myVideo.muted = true
 const peers = {}
@@ -64,7 +63,7 @@ muteButton.addEventListener("click", () => {
     const enabled = myVideoStream.getAudioTracks()[0].enabled;
     if (enabled) {
         myVideoStream.getAudioTracks()[0].enabled = false;
-        html = `<i class="fas fa-microphone-slash after_effect"></i>`;
+        html = `<i class="fas fa-microphone-slash after_effect" title="Unmute"></i>`;
         muteButton.innerHTML = html;
     } else {
         myVideoStream.getAudioTracks()[0].enabled = true;
@@ -78,7 +77,7 @@ stopVideo.addEventListener("click", () => {
     const enabled = myVideoStream.getVideoTracks()[0].enabled;
     if (enabled) {
         myVideoStream.getVideoTracks()[0].enabled = false;
-        html = `<i class="fas fa-video-slash after_effect"></i>`;
+        html = `<i class="fas fa-video-slash after_effect" title="Allow Video"></i>`;
         stopVideo.innerHTML = html;
     } else {
         myVideoStream.getVideoTracks()[0].enabled = true;
