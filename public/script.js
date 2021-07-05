@@ -2,9 +2,9 @@ const socket = io('/')
 const videoGrid = document.getElementById('video-grid')
 
 const myPeer = new Peer(undefined, {
-    path: '/peerjs',
+    // path: '/peerjs',
     host: '/',
-    port: '443'
+    port: '3001'
 })
 let myVideoStream;
 const myVideo = document.createElement('video')
@@ -49,15 +49,15 @@ navigator.mediaDevices.getUserMedia({
             </li>`
         );
     });
-})
 
-socket.on('user-disconnected', userId => {
-    $(".chatMessages").append(
-        `<li>
-          Sombody Left the Call
-        </li>`
-    );
-    if (peers[userId]) peers[userId].close()
+    socket.on('user-disconnected', userId => {
+        $(".chatMessages").append(
+            `<li>
+              Sombody Left the Call
+            </li>`
+        );
+        if (peers[userId]) peers[userId].close()
+    })
 })
 
 myPeer.on('open', id => {
