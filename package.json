@@ -1,26 +1,26 @@
 {
-  "name": "zoom-clone",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "devStart": "nodemon server.js"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "body-parser": "^1.19.0",
-    "ejs": "^3.1.3",
-    "express": "^4.17.1",
-    "jquery": "^3.6.0",
-    "mongoose": "^5.13.1",
-    "peer": "^0.6.1",
-    "peerjs": "^1.3.2",
-    "socket.io": "^2.4.1",
-    "uuid": "^8.1.0"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.4"
-  }
+    "name": "Video-Chat-App",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "devStart": "nodemon server.js"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "body-parser": "^1.19.0",
+        "ejs": "^3.1.3",
+        "express": "^4.17.1",
+        "jquery": "^3.6.0",
+        "mongoose": "^5.13.1",
+        "peer": "^0.6.1",
+        "peerjs": "^1.3.2",
+        "socket.io": "^2.4.1",
+        "uuid": "^8.1.0"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.4"
+    }
 }
