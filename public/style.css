@@ -4,6 +4,13 @@ body {
     background: linear-gradient(90deg, #4e4e86, #655dbb, #4438b2);
 }
 
+.main {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    height: auto;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -11,14 +18,18 @@ body {
     font-family: 'Montserrat', sans-serif;
 }
 
+.row__left {
+    width: 80%;
+}
+
 .first_image_tag {
     text-align: center;
 }
 
 ::placeholder {
+    padding: 2px;
     position: absolute;
     left: 15px;
-    top: 2px;
 }
 
 .container-fluid {
@@ -41,17 +52,16 @@ body {
 }
 
 #video-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, 300px);
-    grid-auto-rows: 300px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 video {
-    width: 100%;
-    height: 100%;
+    height: 220px;
+    width: 320px;
     object-fit: cover;
-    margin: 25px;
-    padding: 2px;
+    padding: 6px;
 }
 
 .logo span {
@@ -71,7 +81,6 @@ video {
     height: 10vh;
     position: relative;
     width: 100%;
-    /* background-image: linear-gradient(to right, #deb5ff, #a578ca, #deb5ff); */
 }
 
 .header_class {
@@ -88,7 +97,7 @@ video {
 }
 
 .options {
-    width: 100%;
+    width: 80%;
     padding: 0.5rem;
     display: flex;
     justify-content: center;
@@ -101,10 +110,9 @@ video {
     font-size: 30px;
     padding: 10px;
     text-align: center;
-    margin-top: 50%;
     margin: auto;
     width: 30%;
-    margin-top: 10%;
+    margin-top: 2%;
     border: 4px solid black;
 }
 
@@ -147,6 +155,10 @@ p {
     margin: 0 0.5rem;
 }
 
+.greet {
+    text-align: center;
+}
+
 .options__button_new {
     display: flex;
     justify-content: center;
@@ -158,4 +170,36 @@ p {
     font-size: 1.2rem;
     width: 50px;
     margin: 0 0.5rem;
+}
+
+.chat-grid {
+    margin-right: 0%;
+    width: 20%;
+    height: 99.85vh;
+    align-items: center;
+    overflow-y: scroll;
+}
+
+.input_msg {
+    outline-width: 0;
+    width: 100%;
+    border: none;
+    border-top: 1px solid black;
+    padding: 10px;
+    flex: 1;
+    align-items: center;
+    scroll-behavior: auto;
+    position: fixed;
+    bottom: 0;
+    overflow-wrap: break-word;
+}
+
+.chat_box {
+    margin-top: 5px;
+    text-align: center;
+    font-size: 25px;
+}
+
+.chatMessages {
+    overflow-wrap: break-word;
 }

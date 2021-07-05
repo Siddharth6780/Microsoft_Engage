@@ -1,14 +1,16 @@
 const socket = io('/')
 const videoGrid = document.getElementById('video-grid')
+
 const myPeer = new Peer(undefined, {
-    path: '/peerjs',
+    // path: '/peerjs',
     host: '/',
-    port: '443'
+    port: '3001'
 })
 let myVideoStream;
 const myVideo = document.createElement('video')
 myVideo.muted = true
 const peers = {}
+
 navigator.mediaDevices.getUserMedia({
     video: true,
     audio: true
@@ -24,11 +26,37 @@ navigator.mediaDevices.getUserMedia({
     })
 
     socket.on('user-connected', userId => {
+        $(".chatMessages").append(
+            `<li>
+            Sombody Joined the Call
+            </li>`
+        );
         connectToNewUser(userId, stream)
     })
+    let text = $(".input_msg");
+    $('html').keydown(function(e) {
+        if (e.which == 13 && text.val().length !== 0) {
+            console.log(text.val());
+            socket.emit('newMessage', text.val(), ROOM_ID);
+            text.val('');
+        }
+    });
+
+    socket.on("createMessage", (message, userName) => {
+        $(".chatMessages").append(
+            `<li>
+              <b>User : </b>${message}
+            </li>`
+        );
+    });
 })
 
 socket.on('user-disconnected', userId => {
+    $(".chatMessages").append(
+        `<li>
+          Sombody Left the Call
+        </li>`
+    );
     if (peers[userId]) peers[userId].close()
 })
 
@@ -67,7 +95,7 @@ muteButton.addEventListener("click", () => {
         muteButton.innerHTML = html;
     } else {
         myVideoStream.getAudioTracks()[0].enabled = true;
-        html = `<i class="fas fa-microphone"></i>`;
+        html = `<i class="fas fa-microphone" title="Mute"></i>`;
         muteButton.style.color = 'white';
         muteButton.innerHTML = html;
     }
@@ -81,7 +109,7 @@ stopVideo.addEventListener("click", () => {
         stopVideo.innerHTML = html;
     } else {
         myVideoStream.getVideoTracks()[0].enabled = true;
-        html = `<i class="fas fa-video"></i>`;
+        html = `<i class="fas fa-video" title="Stop Video"></i>`;
         stopVideo.innerHTML = html;
         stopVideo.style.color = 'white';
     }
@@ -89,7 +117,7 @@ stopVideo.addEventListener("click", () => {
 
 const inviteButton = document.querySelector("#inviteButton");
 inviteButton.addEventListener("click", () => {
-    prompt('Copy this Link to share with others', window.location.href);
+    prompt('Copy this Room Name to share with others\r\nCopy to clipboard: Ctrl+C', ROOM_ID);
 });
 
 const ExitButton = document.querySelector("#ExitButton");

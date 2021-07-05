@@ -18,27 +18,43 @@
     </script>
 </head>
 
-<body class="main_body">
-    <div class="header">
-        <div class="logo">
-            <span class="header_class">Video Chat</span>
+<body>
+    <div class="main">
+        <div class="row__left">
+            <div class="header">
+                <div class="logo">
+                    <span class="header_class">Video Chat</span>
+                </div>
+            </div>
+            <div id="video-grid"></div>
+            <div class="options">
+                <div id="stopVideo" class="options__button">
+                    <i class="fa fa-video-camera" title="Stop Video"></i>
+                </div>
+                <div id="muteButton" class="options__button">
+                    <i class="fa fa-microphone" title="Mute"></i>
+                </div>
+                <div id="inviteButton" class="options__button">
+                    <i class="fas fa-user-plus" title="Invite"></i>
+                </div>
+                <div id="ExitButton" class="options__button_new">
+                    <i class="fa fa-phone fa-flip-horizontal" title="Exit"></i>
+                </div>
+            </div>
+
         </div>
-    </div>
-    <div id="video-grid"></div>
-    <div class="options">
-        <div id="stopVideo" class="options__button">
-            <i class="fa fa-video-camera" title="Stop Video"></i>
-        </div>
-        <div id="muteButton" class="options__button">
-            <i class="fa fa-microphone" title="Mute"></i>
-        </div>
-        <div id="inviteButton" class="options__button">
-            <i class="fas fa-user-plus" title="Invite"></i>
-        </div>
-        <div id="ExitButton" class="options__button_new">
-            <i class="fa fa-phone fa-flip-horizontal" title="Exit"></i>
+        <div class="chat-grid" style="background-color: whitesmoke;">
+            <div class="row__right">
+                <h3 class="chat_box">Chat</h3>
+                <h5 class="greet">Welcome to
+                    <%= (roomID) %>
+                </h5>
+                <ul class="chatMessages"></ul>
+                <input class="input_msg" type="text" placeholder="Type a message...." />
+            </div>
         </div>
     </div>
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 </html>
