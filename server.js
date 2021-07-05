@@ -17,7 +17,7 @@ mongoose.connect('mongodb+srv://admin-siddharth:qwerty_siddharth@cluster0.avmv2.
     }).then(() => console.log("Database connected!"))
     .catch(err => console.log(err));
 
-// app.use('/peerjs', peerServer);
+app.use('/peerjs', peerServer);
 app.set('view engine', 'ejs')
 app.use(express.static('public'))
 
