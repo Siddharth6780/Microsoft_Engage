@@ -1,4 +1,5 @@
-# Microsoft_Engage
+# Video Chat App
+A Video Chat Application build under Microsoft Engage 2021 program.
 
 ## How To Use
 
