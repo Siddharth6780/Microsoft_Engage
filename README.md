@@ -1,5 +1,6 @@
 # Video Chat App
-A Video Chat Application build under Microsoft Engage 2021 program.
+A Video Chat Application build under Microsoft Engage 2021 program.<br>
+<a href="https://video-conferencing-app-node.herokuapp.com/">Click to view the project</a>
 
 ## Key Features
 - Allows Multi users to connect and do Video chat.
