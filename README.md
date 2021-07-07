@@ -11,8 +11,6 @@ A Video Chat Application build under Microsoft Engage 2021 program.
 
 ## How To Use
 
-<!-- Example: -->
-
 To clone and run this application, you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line:
 
 ```bash
@@ -24,3 +22,5 @@ $ npm install
 
 # Run the app
 $ npm start
+
+Then go to http://localhost:3000/
