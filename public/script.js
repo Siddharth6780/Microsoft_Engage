@@ -1,6 +1,5 @@
 const socket = io('/')
 const videoGrid = document.getElementById('video-grid')
-
 const myPeer = new Peer(undefined, {
     path: '/peerjs',
     host: '/',
@@ -11,11 +10,16 @@ const myVideo = document.createElement('video')
 myVideo.muted = true
 const peers = {}
 
+//Asking for the permission of the microphone and camera form the user.
+
 navigator.mediaDevices.getUserMedia({
     video: true,
     audio: true
 }).then(stream => {
     myVideoStream = stream;
+
+    //When the user will give the desired permission then it would add the user's videostream to the mainstream. 
+
     addVideoStream(myVideo, stream)
     myPeer.on('call', call => {
         call.answer(stream)
@@ -25,22 +29,28 @@ navigator.mediaDevices.getUserMedia({
         })
     })
 
+    //Whenever a new user is connected it will send the message to every body in the meeting that a new participant has joined the meeting.
+
     socket.on('user-connected', userId => {
         $(".chatMessages").append(
             `<li>
-            Sombody Joined the Call
+            New paricipant joined the call.
             </li>`
         );
         connectToNewUser(userId, stream)
     })
+
+    //Geting the meesage from the user and sent it to other users.
+
     let text = $(".input_msg");
     $('html').keydown(function(e) {
         if (e.which == 13 && text.val().length !== 0) {
-            console.log(text.val());
             socket.emit('newMessage', text.val(), ROOM_ID);
             text.val('');
         }
     });
+
+    //Appending the send message to the other connected users. 
 
     socket.on("createMessage", (message, userName) => {
         $(".chatMessages").append(
@@ -49,6 +59,8 @@ navigator.mediaDevices.getUserMedia({
             </li>`
         );
     });
+
+    //Whenever a user is disconnected it will send the message to every body in the meeting that a participant has left the meeting.
 
     socket.on('user-disconnected', userId => {
         $(".chatMessages").append(
@@ -77,6 +89,8 @@ function connectToNewUser(userId, stream) {
     peers[userId] = call
 }
 
+//Function of adding video stream of the connecting user to the present meeting.
+
 function addVideoStream(video, stream) {
     video.srcObject = stream
     video.addEventListener('loadedmetadata', () => {
@@ -87,6 +101,9 @@ function addVideoStream(video, stream) {
 
 const muteButton = document.querySelector("#muteButton");
 const stopVideo = document.querySelector("#stopVideo");
+
+//Adding the functionality to Mute/Unmute Button.
+
 muteButton.addEventListener("click", () => {
     const enabled = myVideoStream.getAudioTracks()[0].enabled;
     if (enabled) {
@@ -100,6 +117,8 @@ muteButton.addEventListener("click", () => {
         muteButton.innerHTML = html;
     }
 });
+
+//Adding the functionality to Stop/Allow Video Button.
 
 stopVideo.addEventListener("click", () => {
     const enabled = myVideoStream.getVideoTracks()[0].enabled;
@@ -115,10 +134,14 @@ stopVideo.addEventListener("click", () => {
     }
 });
 
+//Adding the functionality to Invite Button.
+
 const inviteButton = document.querySelector("#inviteButton");
 inviteButton.addEventListener("click", () => {
     prompt('Copy this Room Name to share with others\r\nCopy to clipboard: Ctrl+C', ROOM_ID);
 });
+
+////Adding the functionality to End Call Button.
 
 const ExitButton = document.querySelector("#ExitButton");
 ExitButton.addEventListener("click", () => {
